@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p></p>
+	<input type="text" value="" onchange="p()">
+	<script type="text/javascript" src="work.js"></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		var worker = new SharedWorker("work.js");
+		worker.port.addEventListener('message', function (e) {
+		    $("p").html(e.data.msg);
+		  }, false);
+
+		  worker.port.start();
+		  //worker.port.postMessage({ msg: 'ping' });
+		  function p() {
+		  	var val = $("input").val();
+		  	 worker.port.postMessage({ msg: val });
+		  }
+		
+	</script>
+</body>
+</html>
